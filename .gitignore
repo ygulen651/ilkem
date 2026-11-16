@@ -1,0 +1,6 @@
+config/config.php
+uploads/*
+!uploads/.htaccess
+!uploads/.gitkeep
+.DS_Store
+.openai/
