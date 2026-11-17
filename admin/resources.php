@@ -130,7 +130,7 @@ function admin_settings_groups(): array
                 ['name' => 'home_projects_title', 'label' => 'Projeler bölümü başlığı', 'type' => 'text', 'max' => 150],
                 ['name' => 'home_news_title', 'label' => 'Haberler bölümü başlığı', 'type' => 'text', 'max' => 150],
                 ['name' => 'home_media_title', 'label' => 'Fotoğraf/video bölümü başlığı', 'type' => 'text', 'max' => 150],
-                ['name' => 'home_video_url', 'label' => 'Tanıtım videosu (YouTube bağlantısı)', 'type' => 'link', 'max' => 255, 'help' => 'Ör. https://www.youtube.com/watch?v=XXXXXXXXXXX — boşsa yalnızca fotoğraflar gösterilir.'],
+                ['name' => 'home_video_url', 'label' => 'Tanıtım videosu (YouTube bağlantısı veya MP4 dosyası)', 'type' => 'link', 'max' => 255, 'help' => 'Ör. https://www.youtube.com/watch?v=XXXXXXXXXXX ya da /assets/video/tanitim.mp4 — boşsa yalnızca fotoğraflar gösterilir.'],
                 ['name' => 'home_video_title', 'label' => 'Video başlığı', 'type' => 'text', 'max' => 150],
                 ['name' => 'home_video_image', 'label' => 'Video kapak görseli', 'type' => 'image', 'help' => 'Boşsa YouTube kapak görseli kullanılır.'],
                 ['name' => 'volunteer_eyebrow', 'label' => 'Gönüllü çağrısı - üst yazı', 'type' => 'text', 'max' => 100],

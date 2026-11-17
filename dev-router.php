@@ -32,6 +32,42 @@ if ($path === '/admin/' || $path === '/admin/index.php') {
     require __DIR__ . '/admin/index.php';
     return true;
 }
+// Yerleşik sunucu Range isteklerini desteklemez; Safari video oynatmak için buna ihtiyaç duyar.
+if (is_file($file) && preg_match('#\.(mp4|webm)$#i', $path)) {
+    $size = filesize($file);
+    $start = 0;
+    $end = $size - 1;
+    header('Content-Type: video/' . (str_ends_with(strtolower($path), '.webm') ? 'webm' : 'mp4'));
+    header('Accept-Ranges: bytes');
+    if (preg_match('/^bytes=(\d*)-(\d*)$/', $_SERVER['HTTP_RANGE'] ?? '', $m)) {
+        if ($m[1] === '') {
+            $start = max(0, $size - (int) $m[2]);
+        } else {
+            $start = (int) $m[1];
+            $end = $m[2] !== '' ? min((int) $m[2], $size - 1) : $end;
+        }
+        if ($start > $end || $start >= $size) {
+            http_response_code(416);
+            header("Content-Range: bytes */$size");
+            return true;
+        }
+        http_response_code(206);
+        header("Content-Range: bytes $start-$end/$size");
+    }
+    header('Content-Length: ' . ($end - $start + 1));
+    if ($_SERVER['REQUEST_METHOD'] !== 'HEAD') {
+        $fh = fopen($file, 'rb');
+        fseek($fh, $start);
+        $left = $end - $start + 1;
+        while ($left > 0 && !feof($fh)) {
+            $chunk = fread($fh, min(1048576, $left));
+            echo $chunk;
+            $left -= strlen($chunk);
+        }
+        fclose($fh);
+    }
+    return true;
+}
 if ($path !== '/' && is_file($file)) {
     return false; // Statik dosyayı yerleşik sunucu verir
 }

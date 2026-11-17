@@ -4,17 +4,10 @@ partial('page-banner', [
     'lead' => 'Etkinliklerimizden, buluşmalarımızdan ve projelerimizden kareler.',
     'crumbs' => ['Galeri' => null],
 ]);
-$videoId = youtube_id(setting('home_video_url'));
 ?>
 <section class="section wrap">
-    <?php if ($videoId && $pager['page'] === 1): ?>
-        <div class="video-card video-card-wide">
-            <button type="button" class="video-poster" data-youtube="<?= e($videoId) ?>" aria-label="Tanıtım videosunu oynat">
-                <img src="<?= e(has_media(setting('home_video_image')) ? media_url(setting('home_video_image')) : 'https://i.ytimg.com/vi/' . $videoId . '/hqdefault.jpg') ?>" alt="" loading="lazy">
-                <span class="play-button"><?= icon('play') ?></span>
-                <span class="video-label"><?= e(setting('home_video_title', 'Tanıtım filmimizi izleyin')) ?></span>
-            </button>
-        </div>
+    <?php if (has_promo_video() && $pager['page'] === 1): ?>
+        <?php partial('video-card', ['class' => 'video-card-wide', 'defaultTitle' => 'Tanıtım filmimizi izleyin']); ?>
     <?php endif; ?>
     <?php if ($items !== []): ?>
         <div class="gallery-grid" data-gallery>

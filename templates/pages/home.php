@@ -9,7 +9,7 @@ if ($slides === []) {
         'button2_text' => 'Neler yapıyoruz?', 'button2_url' => '/faaliyetlerimiz',
     ]];
 }
-$videoId = youtube_id(setting('home_video_url'));
+$videoId = has_promo_video();
 $aboutImage = setting('about_image', 'assets/img/together.jpg');
 $alphabet = ['Aa', 'Bb', 'Cc', 'Çç', 'Dd', 'Ee', 'Ff', 'Gg', 'Ğğ', 'Hh', 'Iı', 'İi', 'Jj', 'Kk', 'Ll', 'Mm', 'Nn', 'Oo', 'Öö', 'Pp', 'Rr', 'Ss', 'Şş', 'Tt', 'Uu', 'Üü', 'Vv', 'Yy', 'Zz'];
 /** Başlığı kelime kelime animasyon için böler. */
@@ -184,13 +184,7 @@ for ($s = 1; $s <= 3; $s++) {
     </div>
     <div class="media-grid<?= $videoId ? ' has-video' : '' ?>">
         <?php if ($videoId): ?>
-            <div class="video-card">
-                <button type="button" class="video-poster" data-youtube="<?= e($videoId) ?>" aria-label="Tanıtım videosunu oynat">
-                    <img src="<?= e(has_media(setting('home_video_image')) ? media_url(setting('home_video_image')) : 'https://i.ytimg.com/vi/' . $videoId . '/hqdefault.jpg') ?>" alt="" loading="lazy">
-                    <span class="play-button"><?= icon('play') ?></span>
-                    <span class="video-label"><?= e(setting('home_video_title', 'Müzemizi tanıyın')) ?></span>
-                </button>
-            </div>
+            <?php partial('video-card', ['class' => '', 'defaultTitle' => 'Müzemizi tanıyın']); ?>
         <?php endif; ?>
         <?php if ($gallery !== []): ?>
             <div class="album" data-gallery>

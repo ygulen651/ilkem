@@ -87,6 +87,24 @@
     });
   });
 
+  /* Siteye yüklenmiş MP4/WEBM tanıtım videosu: tıklanınca oynatıcıyı yükle */
+  document.querySelectorAll('[data-video]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var src = btn.getAttribute('data-video');
+      if (!src) return;
+      var video = document.createElement('video');
+      video.src = src;
+      video.controls = true;
+      video.autoplay = true;
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      var poster = btn.querySelector('img');
+      if (poster) video.poster = poster.src;
+      btn.replaceWith(video);
+      video.play().catch(function () {});
+    });
+  });
+
   /* Galeri ışık kutusu */
   var box = document.getElementById('lightbox');
   if (box) {

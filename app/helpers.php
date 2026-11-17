@@ -457,6 +457,27 @@ function youtube_id(?string $url): ?string
     return null;
 }
 
+/** MP4/WEBM dosya adresini (site içi yol veya https) güvenli URL'ye çevirir; video dosyası değilse null döner. */
+function video_file_url(?string $value): ?string
+{
+    $value = trim((string) $value);
+    if ($value === '' || !preg_match('~\.(mp4|webm)$~i', (string) parse_url($value, PHP_URL_PATH))) {
+        return null;
+    }
+    if (preg_match('#^https://#i', $value)) {
+        return $value;
+    }
+    $path = ltrim($value, '/');
+    return str_contains($path, '..') || preg_match('#^[a-z][a-z0-9+.\-]*:#i', $path) ? null : url($path);
+}
+
+/** Tanıtım videosu ayarı geçerli bir YouTube bağlantısı veya video dosyası mı? */
+function has_promo_video(): bool
+{
+    $value = setting('home_video_url');
+    return youtube_id($value) !== null || video_file_url($value) !== null;
+}
+
 /** Yalnızca Google Haritalar gömme adreslerine izin verir. */
 function safe_map_embed(?string $url): ?string
 {
