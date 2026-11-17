@@ -125,7 +125,7 @@ switch ($section) {
         if ($slug !== null) {
             not_found();
         }
-        $pager = paginate(count_gallery(), 24, page_number());
+        $pager = paginate(count_gallery(), 30, page_number());
         render('gallery', ['pageTitle' => 'Fotoğraf Galerisi', 'activeNav' => 'gallery', 'pager' => $pager, 'items' => gallery_items($pager['limit'], $pager['offset'])]);
         break;
 
